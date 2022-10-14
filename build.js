@@ -67,8 +67,8 @@ function rollupWarning(message) {
 (async function () {
   //output Dir
   const outputDirectory = "public";
-  const copyFilePath="src/scene/workerUtils/*.js";
-  const buildFilePath="src/scene/workers/*.js";
+  const copyFilePath="src/wokerUtils/*.js";
+  const buildFilePath="src/workers/*.js";
   //start build
   await buildWorkers({
     minify: true,
