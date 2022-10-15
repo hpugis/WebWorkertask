@@ -10,6 +10,7 @@
   * `npm run umd-build`
 
 ## example
+  * `npm run umd-build`
   * 利用 live-server 等插件，运行 demo/index.html 查看效果
 
 ## In the future
