@@ -1,7 +1,7 @@
 import Uri from "urijs";
 import {defined,destroyObject} from "../utils/ObjectUtils.js";
 import Event from "./Event.js";
-import {isCrossOriginUrl} from "../utils/UrlUtils.js";
+import {isCrossOriginUrl,buildWorkerUrl,requestWasmFile} from "../utils/UrlUtils.js";
 function canTransferArrayBuffer() {
   if (!defined(TaskProcessor._canTransferArrayBuffer)) {
     const worker = new Worker(
@@ -384,22 +384,5 @@ TaskProcessor._canTransferArrayBuffer = undefined;
     reject: reject,
     promise: promise,
   };
-}
-
-function  buildWorkerUrl(relativeUrl){
-  if(!buildWorkerUrl.baseWorkerUrl) {
-   const baseUrl=window.workerBaseUrl?window.workerBaseUrl:window.document.location.origin;
-    buildWorkerUrl.baseWorkerUrl=baseUrl.concat('/workers');
-    buildWorkerUrl.baseUrl=baseUrl;
-  }
-  return buildWorkerUrl.baseUrl.concat('/'+relativeUrl)
-}
-function requestWasmFile(url){
-    fetch(url,{
-        method: 'get',
-        responseType: 'arraybuffer'
-    }).then(res => {     
-        return res.arrayBuffer();
-    })  
 }
 export default TaskProcessor;

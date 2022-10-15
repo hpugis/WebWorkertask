@@ -1,7 +1,8 @@
 import TaskProcessor from "./core/TaskProcessor";
 
-class calculate{
+export default  class calculate{
     constructor(){
+        console.log(window.location.href)
         this.worker=new TaskProcessor('CreateCalculateWorker',3);
     }
     startTaskworker(){
@@ -11,4 +12,3 @@ class calculate{
         return workerPromise;
     }
 }
-export default calculate

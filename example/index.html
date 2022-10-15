@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ThreeJS starter</title>
+    <!-- <link rel="stylesheet" href="./index.scss" /> -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #692a84;
+            background: linear-gradient(316deg, #0e0f2a, #060913);
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        #app {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+    <script src="./../dist/calculate.js"></script>
+    <!-- <script type="module" src="./../dist/webglApp.mjs"></script> -->
+</head>
+
+<body>
+    <button id="btn">首页</button>
+    <script>
+        var cesiumScriptRegex = /((?:.*\/)|^)calculate\.js(?:\?|\#|$)/;
+        let a;
+        function tryMakeAbsolute(url) {
+            if (typeof document === "undefined") {
+                //Node.js and Web Workers. In both cases, the URL will already be absolute.
+                return url;
+            }
+
+            if (!a) {
+                a = document.createElement("a");
+            }
+            a.href = url;
+
+            // IE only absolutizes href on get, not set
+            // eslint-disable-next-line no-self-assign
+            a.href = a.href;
+            return a.href;
+        }
+        function getBaseUrlFromCesiumScript() {
+            const scripts = document.getElementsByTagName("script");
+            for (let i = 0, len = scripts.length; i < len; ++i) {
+                const src = scripts[i].getAttribute("src");
+                const result = src.includes('calculate.js');
+                if (result !== null) {
+                    return src;
+                }
+            }
+            return undefined;
+        }
+
+
+        document.getElementById("btn").onclick = () => {
+            console.log(tryMakeAbsolute(getBaseUrlFromCesiumScript()));
+            const cal = new calculate();
+            const promise = cal.startTaskworker();
+            Promise.resolve(promise)
+                .then(function (result) {
+                    alert(result)
+                }).catch(function (error) {
+                    alert(error)
+                });
+        };
+    </script>
+</body>
+
+</html>
